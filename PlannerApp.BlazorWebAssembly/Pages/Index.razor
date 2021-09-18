@@ -1,7 +1,18 @@
 ﻿@page "/"
 
+
 <h1>Hello, world!</h1>
 
 Welcome to your new app.
 
 <SurveyPrompt Title="How is Blazor working for you?" />
+<AuthorizeView>
+    <Authorized>
+        <MudText Typo="Typo.caption">Welcome </MudText>
+    </Authorized>
+    <NotAuthorized>
+
+        <MudLink Href="/authentication/login">Login</MudLink>
+    </NotAuthorized>
+
+</AuthorizeView>

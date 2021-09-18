@@ -1,3 +1,5 @@
+using Blazored.LocalStorage;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,7 +21,17 @@ namespace PlannerApp.BlazorWebAssembly
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.RootComponents.Add<App>("#app");
 
-            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+            // builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+            builder.Services.AddHttpClient("PlannerApp.Api",client=> 
+            {
+                client.BaseAddress = new Uri("https://plannerapp-api.azurewebsites.net/" );
+            
+            }).AddHttpMessageHandler<AuthorizationMessagehandler>();
+            builder.Services.AddScoped(sp => sp.GetService<IHttpClientFactory>().CreateClient("PlannerApp.Api"));
+            builder.Services.AddTransient<AuthorizationMessagehandler>();
+            builder.Services.AddBlazoredLocalStorage();
+            builder.Services.AddAuthorizationCore();
+            builder.Services.AddScoped<AuthenticationStateProvider, JwtAuthenticationStateProvider>();
             builder.Services.AddMudServices();
             await builder.Build().RunAsync();
         }
