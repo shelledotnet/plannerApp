@@ -1,4 +1,4 @@
-﻿@namespace PlannerApp.BlazorWebAssembly.Components
+﻿@namespace PlannerApp.BlazorWebAssembly.Components.Authentication
 
 <EditForm Model="_model" OnValidSubmit="LoginUserAsync">
     <DataAnnotationsValidator />
@@ -11,19 +11,23 @@
         </MudCardHeader>
         <MudCardContent>
             <MudTextField Label="Email" HelperText="Required" @bind-Value="@_model.Email"></MudTextField>
+            <ValidationMessage For="@(() => _model.Email)" />
+
             <MudTextField Label="Password" HelperText="Required" InputType="InputType.Password" @bind-Value="@_model.Password"></MudTextField>
-            <ValidationSummary />
+            <ValidationMessage For="@(() => _model.Password)" />
+
+            @*<ValidationSummary />*@
 
             @if (!string.IsNullOrEmpty(_errorMessage))
             {
-                <MudAlert Severity="Severity.Error" Class="my-2" Variant="Variant.Filled">@_errorMessage</MudAlert>
-            }
+        <MudAlert Severity="Severity.Error" Class="my-2" Variant="Variant.Filled">@_errorMessage</MudAlert>
+        }
 
 
         </MudCardContent>
         <MudCardActions>
             <MudButton ButtonType="ButtonType.Submit"  StartIcon="@Icons.Material.Filled.Login" IconColor="Color.Tertiary"  Variant="Variant.Filled" Disabled="_isBusy" Color="Color.Primary">Login</MudButton>
-            <MudButton Variant="Variant.Outlined" StartIcon="@Icons.Material.Filled.Create" IconColor="Color.Default" Color="Color.Secondary" Disabled="_isBusy" Class="ml-1">Create Account</MudButton>
+            <MudButton Variant="Variant.Outlined" StartIcon="@Icons.Material.Filled.Create" IconColor="Color.Default" Color="Color.Secondary" Disabled="_isBusy" Class="ml-1" OnClick="RedirectToRegister">Create Account</MudButton>
         </MudCardActions>
     </MudCard>
 

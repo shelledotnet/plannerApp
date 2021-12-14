@@ -2,6 +2,7 @@
     <Router AppAssembly="@typeof(Program).Assembly" PreferExactMatches="@true">
         <Found Context="routeData">
             <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)">
+
                 <NotAuthorized>
                     <h1>You don't have access for this page</h1>
                 </NotAuthorized>
@@ -14,3 +15,17 @@
         </NotFound>
     </Router>
 </CascadingAuthenticationState>
+@*ensure to add using Microsoft.AspNetCore.Components.Authorization at the global using componet class --Import.Razor
+    to enable all the CascadingAuthenticationState parameters e.g  AuthorizeView*@
+@*the CascadingAuthenticationState component on the parant component allow all the child component to have casacading paramter
+    so in the child we can have access to authentication state paramter remeber the paramater is in the parent becos we
+        use casecade its also available in all the child component
+
+       for example in the child component Index.Razor u can have this in the code behind file
+        [CascadingParameter]
+        public Task<AuthenticationState> AuthState { get; set; }
+*@
+
+@*Note App.razor is the parent for all other component*@
+@*why do we have cascadingauthenticationstate component in App.razor component:
+    we want all the child component to have authentication state paramters *@

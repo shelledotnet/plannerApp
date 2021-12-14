@@ -6,9 +6,10 @@
 Welcome to your new app.
 
 <SurveyPrompt Title="How is Blazor working for you?" />
+
 <AuthorizeView>
     <Authorized>
-        <MudText Typo="Typo.caption">Welcome </MudText>
+        <MudText Typo="Typo.caption">Welcome @context.User.FindFirst(System.Security.Claims.ClaimTypes.GivenName).Value </MudText>
     </Authorized>
     <NotAuthorized>
 
@@ -16,3 +17,9 @@ Welcome to your new app.
     </NotAuthorized>
 
 </AuthorizeView>
+
+@{ 
+//[CascadingParameter]
+//public async Task<AuthenticationState> AuthState { get; set; }
+
+}

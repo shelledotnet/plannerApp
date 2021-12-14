@@ -8,28 +8,31 @@ using System.Threading.Tasks;
 
 namespace PlannerApp.Shared.Validators
 {
-   public  class RegisterRequestValidator : AbstractValidator<RegisterRequest>
+
+    #region Install_FluentValidation here on the calling App Install Blazor.FluentValidation
+    public class RegisterRequestValidator : AbstractValidator<RegisterRequest>
     {
         public RegisterRequestValidator()
         {
             RuleFor(p => p.Email)
-                  .NotEmpty().WithMessage("email id required")
-                  .EmailAddress().WithMessage("invaslid email id");
+                  .NotEmpty().WithMessage("email id required")  //email must not empty else withmessage
+                  .EmailAddress().WithMessage("invalid email id");//email must be valid emailAddress else withmessage
 
             RuleFor(p => p.FirstName)
-                   .NotEmpty().WithMessage("firstName required")
-                   .MaximumLength(15).WithMessage("firstname must be less than 25 characters");
+                   .NotEmpty().WithMessage("firstName required")//firstname must not be empty else withmessage
+                   .MaximumLength(25).WithMessage("firstname must be less than 25 characters");//firstname max lenght is 15 else withmessage
 
-            RuleFor(p=>p.LastName)
+            RuleFor(p => p.LastName)
                 .NotEmpty().WithMessage("lastName required")
-                .MaximumLength(15).WithMessage("firstname must be less than 25 characters");
+                .MaximumLength(25).WithMessage("firstname must be less than 25 characters");
             RuleFor(p => p.Password)
                 .NotEmpty().WithMessage("password required")
                 .MinimumLength(5).WithMessage("password must at least 5 characters");
             RuleFor(p => p.ConfirmPassword)
-                .NotEmpty().WithMessage("confirm password required")
-                .Equal(p => p.Password).WithMessage("confirm password doesn't match password");
+                .NotEmpty().WithMessage("confirm password required")//confirmpassword must not be empty else withmessage
+                .Equal(p => p.Password).WithMessage("confirm password doesn't match password");//confirmpassword must be equal to password else withmessage
 
         }
-    }
+    } 
+    #endregion
 }

@@ -1,0 +1,38 @@
+﻿@namespace PlannerApp.BlazorWebAssembly.Components.Authentication
+
+<EditForm Model="_model" OnValidSubmit="RegisterUserAsync">
+    <FluentValidationValidator />
+    <MudCard>
+        <MudCardHeader>
+            <CardHeaderContent>
+                <MudText Typo="Typo.h6">Welcome to Planner App v2.0</MudText>
+                <MudText Typo="Typo.h6">Create a new account</MudText>
+            </CardHeaderContent>
+
+        </MudCardHeader>
+        <MudCardContent>
+            <MudTextField Label="Email" HelperText="Required" @bind-Value="@_model.Email"></MudTextField>
+            <ValidationMessage For="@(() => _model.Email)" />
+            <MudTextField Label="FirstName" HelperText="Required" @bind-Value="@_model.FirstName"></MudTextField>
+            <ValidationMessage For="@(() => _model.FirstName)" />
+            <MudTextField Label="LastName" HelperText="Required" @bind-Value="@_model.LastName"></MudTextField>
+            <ValidationMessage For="@(() => _model.LastName)" />
+            <MudTextField Label="Password" HelperText="Required" InputType="InputType.Password" @bind-Value="@_model.Password"></MudTextField>
+            <ValidationMessage For="@(() => _model.Password)" />
+            <MudTextField Label="ConfirmPassword" HelperText="Required" InputType="InputType.Password" @bind-Value="@_model.ConfirmPassword"></MudTextField>
+            <ValidationMessage For="@(() => _model.ConfirmPassword)" />
+            @*<ValidationSummary />*@
+
+            @if (!string.IsNullOrEmpty(_errorMessage))
+            {
+                <MudAlert Severity="Severity.Error" Class="my-2" Variant="Variant.Filled">@_errorMessage</MudAlert>}
+
+
+        </MudCardContent>
+        <MudCardActions>
+            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Create" IconColor="Color.Default" Color="Color.Primary" Disabled="_isBusy" Class="ml-1">Create Account</MudButton>
+            <MudButton Variant="Variant.Filled"  StartIcon="@Icons.Material.Filled.Login" IconColor="Color.Dark"  Disabled="_isBusy" Color="Color.Info" OnClick="RedirectToLogin" Class="ml-1">Login</MudButton>
+        </MudCardActions>
+    </MudCard>
+
+</EditForm>

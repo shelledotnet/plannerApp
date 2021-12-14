@@ -11,6 +11,6 @@ namespace PlannerApp.Services.Interfaces
    public   interface IAuthenticationService
     {
         Task<ApiResponse> RegisterUserAsync(RegisterRequest model);
-
+        Task<ApiResponse> LoginUserAsync(LoginRequest model);
     }
 }

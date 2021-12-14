@@ -11,7 +11,10 @@
 
     </Authorized>
     <NotAuthorized>
-        <MudMenu Icon="@Icons.Filled.Login" Color="Color.Secondary" OnClick='()=> Navigation.NavigateTo("/authentication/login")'/>
+        @*<MudMenu Icon="@Icons.Filled.Login" Color="Color.Secondary" OnClick='()=> Navigation.NavigateTo("/authentication/login")' />*@
+        <MudLink Href="/authentication/login">
+            <MudMenu Icon="@Icons.Filled.Login" Color="Color.Secondary" />
+        </MudLink>
     </NotAuthorized>
 </AuthorizeView>
 

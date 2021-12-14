@@ -11,14 +11,14 @@ namespace PlannerApp.Shared.Models
     public class LoginRequest
     {
         [Required(ErrorMessage ="email id required")]
-        [EmailAddress]
+        [EmailAddress(ErrorMessage ="invalid email id")]
         public string Email { get; set; }
 
+
         [Required(ErrorMessage ="password required")]
-        [StringLength(20,MinimumLength =6)]
+        [StringLength(20,MinimumLength=6,ErrorMessage ="invalid character lenght for password")]
         public string Password { get; set; }
 
-        
     }
 
 
