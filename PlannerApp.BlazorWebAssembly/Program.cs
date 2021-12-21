@@ -35,17 +35,14 @@ namespace PlannerApp.BlazorWebAssembly
             }).AddHttpMessageHandler<AuthorizationMessagehandler>();
             //the esence of the message handler above is to force the request(create ,read,update,delete)andresponse to go through the message handler function sendAsync() in other to set access token on the header of every request
 
-
             //this register httpclient service whose name is PlannerApp.Api
             builder.Services.AddScoped(sp => sp.GetService<IHttpClientFactory>().CreateClient("PlannerApp.Api"));
-
-
 
             builder.Services.AddTransient<AuthorizationMessagehandler>();
             builder.Services.AddBlazoredLocalStorage();
             builder.Services.AddAuthorizationCore();//this will allow us to use Authorize attribute
             builder.Services.AddScoped<AuthenticationStateProvider, JwtAuthenticationStateProvider>();
-            builder.Services.AddHttpClientService();
+            builder.Services.AddHttpClientService(); 
             builder.Services.AddMudServices();
             await builder.Build().RunAsync();
         }

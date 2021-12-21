@@ -13,7 +13,7 @@ using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
 
-namespace PlannerApp.BlazorWebAssembly.Components.Authentication
+namespace PlannerApp.BlazorWebAssembly.Components.Auth
 {
     public partial class LoginForm : ComponentBase
     {
@@ -24,17 +24,19 @@ namespace PlannerApp.BlazorWebAssembly.Components.Authentication
         [Inject]
         public NavigationManager Navigation { get; set; }
 
+
+        [Inject]
+        public IJSRuntime JSRunTime { get; set; }//login system
+
         //[Inject]
         //public AuthenticationStateProvider AuthenticationStateProvider { get; set; }  //tellus about login user
 
-        //[Inject]
-        //public IJSRuntime JSRunTime { get; set; }//login system
 
         //[Inject]
         //public ILocalStorageService Storage { get; set; }//is use to store access token  and expiry date after the response from the server
 
         #endregion
- 
+
         #region Variable for the form
         private readonly LoginRequest _model = new();
 
@@ -60,25 +62,21 @@ namespace PlannerApp.BlazorWebAssembly.Components.Authentication
             }
             catch (ApiException apiException)
             {
+                await JSRunTime.InvokeVoidAsync("console.log", "Exception", apiException);
                 _errorMessage = apiException.ApiErrorResponse.Message;
+
 
             }
             catch (Exception ex)
             {
-                //log error
-                //return StatusCode(500, ex.Message);
-                // return StatusCode(StatusCodes.Status500InternalServerError, "Error creating new employee records " + ex.Message);
-                //log the info
-                _model.Password = _model.Password.Replace(_model.Password.Substring(2), "****");
-                //await JSRunTime.InvokeVoidAsync("console.log", "request", _model);
-                //await JSRunTime.InvokeVoidAsync("console.log", "response", "Error retreiving data from the server at authentication/login " + ex.Message);
-
+                await JSRunTime.InvokeVoidAsync("console.log", "Exception", ex);
                 _errorMessage = "Error fetching  employee record ";
             }
+            _isBusy = false;
         }
         private void RedirectToRegister()
         {
-            Navigation.NavigateTo("/authentication/register");
+            Navigation.NavigateTo("/auth/register");
         }
     }
 }

@@ -55,7 +55,7 @@ namespace PlannerApp.Services
                 throw new ApiException(errorReponse, response.StatusCode);
             }
         }
-        public async Task<ApiResponse> LoginUserAsync(LoginRequest model)
+        public async Task<ApiResponse<LoginResult>> LoginUserAsync(LoginRequest model)
         {
             var response = await _httpClient.PostAsJsonAsync("/api/v2/auth/Login", model);
             model.Password = model.Password.Replace(model.Password.Substring(2), "****");

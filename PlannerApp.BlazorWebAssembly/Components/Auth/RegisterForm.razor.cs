@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PlannerApp.BlazorWebAssembly.Components.Authentication
+namespace PlannerApp.BlazorWebAssembly.Components.Auth
 {
     public partial class RegisterForm : ComponentBase
     {
@@ -18,6 +18,10 @@ namespace PlannerApp.BlazorWebAssembly.Components.Authentication
 
         [Inject]
         public NavigationManager Navigation { get; set; }
+
+
+        [Inject]
+        public IJSRuntime JSRunTime { get; set; }//login system
 
         #endregion
 
@@ -69,31 +73,26 @@ namespace PlannerApp.BlazorWebAssembly.Components.Authentication
                 #endregion
 
                 await AuthenticationService.RegisterUserAsync(_model);
-                Navigation.NavigateTo("/authentication/login");
+                Navigation.NavigateTo("/auth/login");
                 _isBusy = false;
 
             }
             catch (ApiException apiException)
             {
+                await JSRunTime.InvokeVoidAsync("console.log", "Exception", apiException);
                 _errorMessage = apiException.ApiErrorResponse.Message;
 
             }
             catch (Exception ex)
             {
-                //log error
-                //return StatusCode(500, ex.Message);
-                // return StatusCode(StatusCodes.Status500InternalServerError, "Error creating new employee records " + ex.Message);
-                //log the info
-                _model.Password = _model.Password.Replace(_model.Password.Substring(2), "****");
-                //await JSRunTime.InvokeVoidAsync("console.log", "request", _model);
-                //await JSRunTime.InvokeVoidAsync("console.log", "response", "Error retreiving data from the server at authentication/login " + ex.Message);
-
+                await JSRunTime.InvokeVoidAsync("console.log", "Exception", ex);
                 _errorMessage = "Error fetching  employee record ";
             }
+            _isBusy = false;
         }
         private  void RedirectToLogin()
         {
-            Navigation.NavigateTo("/authentication/login");
+            Navigation.NavigateTo("/auth/login");
         }
     }
 }

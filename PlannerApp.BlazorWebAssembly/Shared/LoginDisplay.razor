@@ -11,8 +11,8 @@
 
     </Authorized>
     <NotAuthorized>
-        @*<MudMenu Icon="@Icons.Filled.Login" Color="Color.Secondary" OnClick='()=> Navigation.NavigateTo("/authentication/login")' />*@
-        <MudLink Href="/authentication/login">
+        @*<MudMenu Icon="@Icons.Filled.Login" Color="Color.Secondary" OnClick='()=> Navigation.NavigateTo("/auth/login")' />*@
+        <MudLink Href="/auth/login">
             <MudMenu Icon="@Icons.Filled.Login" Color="Color.Secondary" />
         </MudLink>
     </NotAuthorized>
@@ -25,6 +25,6 @@
         await Storage.RemoveItemAsync("expiry_date");
 
         await AuthenticationStateProvider.GetAuthenticationStateAsync();
-        Navigation.NavigateTo("/authentication/login");
+        Navigation.NavigateTo("/auth/login");
     }
 }
