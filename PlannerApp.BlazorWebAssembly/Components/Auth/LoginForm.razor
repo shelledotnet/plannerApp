@@ -10,8 +10,9 @@
            
         </MudCardHeader>
         <MudCardContent>
-            <MudTextField Label="Email" HelperText="Required" @bind-Value="@_model.Email"></MudTextField>
+            <MudTextField Label="Email" HelperText="Required , This field uses Counter prop" @bind-Value="@_model.Email" T="string" Counter="25"  Immediate="true" Validation="@(new Func<string, IEnumerable<string>>(MaxCharacters))"></MudTextField>
             <ValidationMessage For="@(() => _model.Email)" />
+            
 
             <MudTextField Label="Password" HelperText="Required" InputType="InputType.Password" @bind-Value="@_model.Password"></MudTextField>
             <ValidationMessage For="@(() => _model.Password)" />
@@ -20,8 +21,8 @@
 
             @if (!string.IsNullOrEmpty(_errorMessage))
             {
-        <MudAlert Severity="Severity.Error" Class="my-2" Variant="Variant.Filled">@_errorMessage</MudAlert>
-        }
+               <MudAlert Severity="Severity.Error" Class="my-2" Variant="Variant.Filled">@_errorMessage</MudAlert>
+            }
 
 
         </MudCardContent>

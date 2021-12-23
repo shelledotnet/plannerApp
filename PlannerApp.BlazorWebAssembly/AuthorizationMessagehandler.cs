@@ -24,8 +24,8 @@ namespace PlannerApp.BlazorWebAssembly
             {
                 //if the localstorage contain acces token then store it on the header
                 var token = await _localStorageService.GetItemAsStringAsync("access_token");// this store the key value pair of the acces_token
-                request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer "+token);
-                await _jSRuntime.InvokeVoidAsync("console.log", "Header-parameter", new { request.Headers.Authorization, token });
+                request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer",token);
+                
             }
             //Console.WriteLine($"Authorization message handler called: {request.Headers.Authorization}");
             await _jSRuntime.InvokeVoidAsync("console.log", "Header-parameter", new { request.Headers.Authorization });

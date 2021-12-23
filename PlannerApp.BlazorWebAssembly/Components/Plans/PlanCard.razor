@@ -30,8 +30,8 @@ else
         <MudText Typo="Typo.body2">@PlanSummary?.Description</MudText>
     </MudCardContent>
     <MudCardActions>
-        <MudIconButton Icon="@Icons.Material.Filled.Preview" Color="Color.Default" OnClick="async ()=> await OnViewClicked.InvokeAsync(PlanSummary)" />
-        <MudIconButton Icon="@Icons.Material.Filled.Edit" Color="Color.Default" OnClick="async ()=> await OnEditClicked.InvokeAsync(PlanSummary)" />
+        <MudIconButton Icon="@Icons.Material.Filled.Preview" Color="Color.Success" OnClick="async ()=> await OnViewClicked.InvokeAsync(PlanSummary)" />
+        <MudIconButton Icon="@Icons.Material.Filled.Edit" Color="Color.Primary" OnClick="async ()=> await OnEditClicked.InvokeAsync(PlanSummary)" />
         <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Error" OnClick="async ()=> await OnDeleteClicked.InvokeAsync(PlanSummary)" />
     </MudCardActions>
 </MudCard>

@@ -22,8 +22,14 @@ namespace PlannerApp.BlazorWebAssembly.Components.Plans
         
         protected async override Task OnInitializedAsync()
         {
+            await GetPlanAsync();
+        }
+
+        private async Task GetPlanAsync(int pageNumber=1)
+        {
+            _pageNumber = pageNumber;
             _isBusy = true;
-            _result =await FetchPlans?.Invoke(_query, _pageNumber, _pageSize); // ?  if its null it will not throw an exception
+            _result = await FetchPlans?.Invoke(_query, _pageNumber, _pageSize); // ?  if its null it will not throw an exception
             _isBusy = false;
         }
     }
