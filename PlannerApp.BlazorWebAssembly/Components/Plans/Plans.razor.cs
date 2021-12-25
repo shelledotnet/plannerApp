@@ -81,5 +81,17 @@ namespace PlannerApp.BlazorWebAssembly.Components.Plans
             return null;
            
         }
+
+        #region View Toggler
+        private bool _isCardViewEnabled = true;
+        private void SetCardsView()
+        {
+            _isCardViewEnabled = true;
+        }
+        private void SetTableView()
+        {
+            _isCardViewEnabled = false;
+        }
+        #endregion
     }
 }

@@ -1,5 +1,17 @@
 ﻿@namespace PlannerApp.BlazorWebAssembly.Components.Plans
-
 @*UI View Selector*@
+<MudText Typo="Typo.h4">My Plans</MudText>
+
+<MudIconButton Icon="@Icons.Material.Filled.GridView" Color="Color.Primary" Disabled="_isCardViewEnabled" OnClick="SetCardsView"></MudIconButton>
+<MudIconButton Icon="@Icons.Material.Filled.TableView" Color="Color.Primary" Disabled="@(! _isCardViewEnabled)" OnClick="SetTableView"></MudIconButton>
+
 <div class="mt-4" />
+@if (_isCardViewEnabled)
+{
 <PlansCardList FetchPlans="GetPlansAsync"/>
+}
+else
+{
+<PlansTable />
+}
+
