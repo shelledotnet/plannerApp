@@ -13,5 +13,9 @@ namespace PlannerApp.Services.Interfaces
         
        
        Task<ApiResponse<PagedList<PlanSummary>>> GetPlannsAsync(string query= null, int pageNumber = 1, int pageSize = 10);
+
+       Task<ApiResponse<PlanDetail>> CreateAsync(PlanDetail planDetail,FormFile formFile);
+
+        Task<ApiResponse<PlanDetail>> EditAsync(PlanDetail planDetail, FormFile formFile);
     }
 }

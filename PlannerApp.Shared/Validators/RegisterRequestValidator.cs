@@ -33,6 +33,6 @@ namespace PlannerApp.Shared.Validators
                 .Equal(p => p.Password).WithMessage("confirm password doesn't match password");//confirmpassword must be equal to password else withmessage
 
         }
-    } 
+    }
     #endregion
 }
