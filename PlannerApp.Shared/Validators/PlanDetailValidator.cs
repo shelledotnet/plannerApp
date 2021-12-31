@@ -8,12 +8,12 @@ namespace PlannerApp.Shared.Validators
         public PlanDetailValidator()
         {
             RuleFor(p => p.Title)
-                  .NotEmpty().WithMessage("title required")  //title must not empty else withmessage
+                  .NotEmpty().WithMessage("title is required")  //title must not empty else withmessage
                   .MaximumLength(80).WithMessage("title must not be more than 80 characters");//title must not be more than 80 else withmesaage
 
             RuleFor(p => p.Description)
                    .MaximumLength(500).WithMessage("description must not be more than 500 characters");//description max lenght is 500 else withmessage
-
+          
         }
     }
     
