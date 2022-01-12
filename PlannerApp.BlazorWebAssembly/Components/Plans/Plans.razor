@@ -5,10 +5,16 @@
 <div class="mt-4" />
 @if (_isCardViewEnabled)
 {
-<PlansCardList FetchPlans="GetPlansAsync"/>
+<PlansCardList FetchPlans="GetPlansAsync" 
+               OnEditClicked="EditPlan" 
+               OnDeleteClicked="DeletePlanAsync"
+               OnViewClicked="ViewPlan"/>
 }
 else
 {
-<PlansTable />
+<PlansTable 
+            OnEditClicked="EditPlan"
+            OnDeleteClicked="DeletePlanAsync"
+            OnViewClicked="ViewPlan"/>
 }
 

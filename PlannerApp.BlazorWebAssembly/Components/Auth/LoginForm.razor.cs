@@ -62,7 +62,7 @@ namespace PlannerApp.BlazorWebAssembly.Components.Auth
             }
             catch (ApiException apiException)
             {
-                await JSRunTime.InvokeVoidAsync("console.log", "Error", new { apiException.ApiErrorResponse,apiException.StatusCode });
+                await JSRunTime.InvokeVoidAsync("console.log", "Error", apiException);
                 _errorMessage = apiException.ApiErrorResponse.Message;
 
 
@@ -70,7 +70,7 @@ namespace PlannerApp.BlazorWebAssembly.Components.Auth
             catch (Exception ex)
             {
                  await JSRunTime.InvokeVoidAsync("console.log", "Error", ex.Message);
-                _errorMessage = "Error fetching  employee record ";
+                _errorMessage = "Error fetching  employee record";
             }
             _isBusy = false;
         }
@@ -81,7 +81,16 @@ namespace PlannerApp.BlazorWebAssembly.Components.Auth
         private IEnumerable<string> MaxCharacters(string ch)
         {
             if (!string.IsNullOrEmpty(ch) && 25 < ch?.Length)
+            {
+                _isBusy = true;
                 yield return "Max 25 characters exided";
+
+            }
+            else
+            {
+                _isBusy = false;
+            }
+            
         }
     }
 }

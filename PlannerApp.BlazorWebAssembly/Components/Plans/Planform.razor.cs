@@ -38,8 +38,16 @@ namespace PlannerApp.BlazorWebAssembly.Components.Plans
         #region Variable for the PlansList
 
         private PlanDetail _model = new PlanDetail();
+
+        [Parameter]
+        public string Id { get; set; }  //tempalte paramter for editing
+        public bool _isEditMode => Id != null;
         private bool _isBusy = false;
-        private Stream _stream = null;
+
+        //this represent the stream of the file
+        private Stream _stream = null; 
+
+        //incase the file is selected
         private string _fileName = string.Empty;
         private string _errorMessage = string.Empty;
         #endregion
@@ -53,14 +61,16 @@ namespace PlannerApp.BlazorWebAssembly.Components.Plans
                 FormFile formFile = null;
                 if (_stream !=null)
                     formFile = new FormFile(_stream, _fileName);
-
-                var result=await PlannerService.CreateAsync(_model, formFile);
+                if(_isEditMode)
+                    await PlannerService.EditAsync(_model, formFile);
+                else
+                    await PlannerService.CreateAsync(_model, formFile);
                 Navigation.NavigateTo("/plans");
-               
+                
             }
             catch (ApiException apiException)
             {
-                await JSRunTime.InvokeVoidAsync("console.log", "Error", new { apiException.ApiErrorResponse, apiException.StatusCode });
+                await JSRunTime.InvokeVoidAsync("console.log", "Error", apiException);
                 _errorMessage = apiException.ApiErrorResponse.Message;
 
 
@@ -72,6 +82,8 @@ namespace PlannerApp.BlazorWebAssembly.Components.Plans
             }
             _isBusy = false;
         }
+
+        //this will be use when choosing a file
         private async Task OnChooseFileAsync(InputFileChangeEventArgs e)
         {
             _errorMessage = string.Empty;
@@ -108,6 +120,35 @@ namespace PlannerApp.BlazorWebAssembly.Components.Plans
                     _fileName = file.Name;
                 }
             }
+        }
+
+        protected  override async Task OnInitializedAsync()
+        {
+            if (_isEditMode)
+                await FetchPlanById();
+        }
+
+        private async Task FetchPlanById()
+        {
+            _isBusy = true;
+            try
+            {
+                var result = await PlannerService.GetPlannsByIdAsync(Id);
+                _model = result.Value;
+            }
+            catch (ApiException apiException) //execption from the api that we have anticipitated
+            {
+                await JSRunTime.InvokeVoidAsync("console.log", "Error", apiException);
+                _errorMessage = apiException.ApiErrorResponse.Message;
+
+
+            }
+            catch (Exception ex) //exception that we do not anticaipated
+            {
+                await JSRunTime.InvokeVoidAsync("console.log", "Error", ex.Message);
+                _errorMessage = "Error fetching  employee record ";
+            }
+            _isBusy = false;
         }
     }
 }

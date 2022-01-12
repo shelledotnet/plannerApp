@@ -85,7 +85,7 @@ namespace PlannerApp.BlazorWebAssembly.Components.Auth
             }
             catch (Exception ex)
             {
-                await JSRunTime.InvokeVoidAsync("console.log", "Exception", ex);
+                await JSRunTime.InvokeVoidAsync("console.log", "Exception", ex.Message);
                 _errorMessage = "Error fetching  employee record ";
             }
             _isBusy = false;

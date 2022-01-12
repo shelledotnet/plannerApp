@@ -8,13 +8,17 @@
     <ValidationMessage For="@(() => _model.Title)" />
     <MudTextField Label="Description" HelperText="Optional" @bind-Value="@_model.Description" Lines="4" Variant="Variant.Outlined" />
     <ValidationMessage For="@(() => _model.Description)" />
+
     <InputFile id="fileInput" OnChange="OnChooseFileAsync" hidden multiple />
     <MudFab HtmlTag="Label"
             Color="Color.Secondary"
             Icon="@Icons.Filled.Image"
             Label="Load picture"
             for="fileInput" />
-
+    @if (_isEditMode)
+    {
+        <img src="@_model.CoverUrl" style="width:75%;" class="m-2"/>
+    }
     @if (_stream != null)  //meaning a file exist
     {
         <MudText Typo="Typo.subtitle2">@_fileName</MudText>

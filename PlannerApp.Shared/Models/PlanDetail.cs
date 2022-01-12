@@ -10,6 +10,10 @@ namespace PlannerApp.Shared.Models
     public class PlanDetail : PlanSummary
     {
         public IFormFile CoverFile { get; set; }
+
         //Todo list of items
+        public List<ToDoItemDetail> ToDoItems { get; set; }
+
     }
+
 }

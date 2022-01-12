@@ -1,7 +1,19 @@
 ﻿@page "/plans"
 
-<PAPage Title="My Plans" BreadcrumbItems="_breadcrumbItems">
-    <Plans />
-</PAPage>
+
+
+<AuthorizeView>
+    <Authorized>
+        <PAPage Title="My Plans" BreadcrumbItems="_breadcrumbItems">
+            <Plans />
+        </PAPage>
+    </Authorized>
+    <NotAuthorized>
+        <MudText Typo="Typo.caption">Welcome extem user , please login to view the page</MudText>
+        <MudDivider DividerType="DividerType.FullWidth" Class="my-2" />
+        <MudLink Href="/auth/login">Login</MudLink>
+    </NotAuthorized>
+
+</AuthorizeView>
 
 
