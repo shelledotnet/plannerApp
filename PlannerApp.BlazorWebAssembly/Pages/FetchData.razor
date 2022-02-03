@@ -1,7 +1,10 @@
 ﻿@page "/fetchdata"
 @inject HttpClient Http
 @attribute [Authorize] 
- @*for Authorize attribute ensure u add the service an also to add the using directive (using Microsoft.AspNetCore.Authorization;) at the global using component class --impots.*@
+ @*for Authorize attribute ensure u add the service at program.cs an also to add the using directive (using Microsoft.AspNetCore.Authorization;) at the global using component class --impots.*@
+ @*simply u cant access this page if not signed in*@
+ <PageTitle>Fetch Data | PlannerApp</PageTitle>
+
 
 <h1>Weather forecast</h1>
 
