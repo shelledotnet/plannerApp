@@ -12,6 +12,8 @@ namespace PlannerApp.BlazorWebAssembly.Components.ToDoItems
         [Parameter]
         public ToDoItemDetail Item { get; set; }
 
+        private bool _isChecked = true;
+
 
     }
 }
