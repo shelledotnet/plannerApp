@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.JSInterop;
+using MudBlazor;
+using PlannerApp.BlazorWebAssembly.Shared;
 using PlannerApp.Services.Exceptions;
 using PlannerApp.Services.Interfaces;
 using PlannerApp.Shared.Models;
@@ -28,6 +30,9 @@ namespace PlannerApp.BlazorWebAssembly.Components.Auth
         [Inject]
         public IJSRuntime JSRunTime { get; set; }//login system
 
+        [CascadingParameter]  //this show case a casecading parent in the child with this you can call all methods in this casecading class e,g Error componemnt
+        public Error Error { get; set; }
+
         //[Inject]
         //public AuthenticationStateProvider AuthenticationStateProvider { get; set; }  //tellus about login user
 
@@ -46,14 +51,14 @@ namespace PlannerApp.BlazorWebAssembly.Components.Auth
         #endregion
         private async Task LoginUserAsync()
         {
-
+            _isBusy = true;
             try
             {
+                //throw new ArgumentException("Invald data");
 
-                _isBusy = true;
                 _errorMessage = string.Empty;
+               
 
-             
 
                 await AuthenticationService.LoginUserAsync(_model);
                 Navigation.NavigateTo("/");
@@ -62,15 +67,17 @@ namespace PlannerApp.BlazorWebAssembly.Components.Auth
             }
             catch (ApiException apiException)
             {
-                await JSRunTime.InvokeVoidAsync("console.log", "Error", apiException);
+                
+                await JSRunTime.InvokeVoidAsync("console.log", "Error",new { apiException.ApiErrorResponse , apiException.StatusCode });
                 _errorMessage = apiException.ApiErrorResponse.Message;
 
 
             }
             catch (Exception ex)
             {
-                 await JSRunTime.InvokeVoidAsync("console.log", "Error", ex.Message);
-                _errorMessage = "Error fetching  employee record";
+                await JSRunTime.InvokeVoidAsync("console.log", "Error", new { ex.Message, date = DateTime.Now });
+               _errorMessage = "Error completing task , Please try again later "+ Severity.Error;
+                Error.HandleError(ex);
             }
             _isBusy = false;
         }

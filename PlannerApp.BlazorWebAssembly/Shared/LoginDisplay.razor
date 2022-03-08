@@ -3,7 +3,7 @@
 @inject NavigationManager Navigation
 <AuthorizeView>
     <Authorized>
-        <MudMenu Icon="@Icons.Material.Filled.Person" Color="Color.Inherit" Direction="Direction.Right" OffsetY="true">
+        <MudMenu Icon="@Icons.Material.Filled.Person" Color="Color.Default" Direction="Direction.Right" OffsetY="true">
             <MudMenuItem>Welcome @context.User.FindFirst(ClaimTypes.GivenName).Value</MudMenuItem>
             <MudMenuItem OnClick="LogOutAsync">LogOut</MudMenuItem>
            

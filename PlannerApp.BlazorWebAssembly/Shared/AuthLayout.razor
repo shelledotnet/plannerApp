@@ -5,6 +5,7 @@
         <MudText Typo="Typo.h5" Class="ml-3">PlannerApp</MudText>
         <MudSpacer />
         <MudIconButton Icon="@Icons.Material.Filled.MoreVert" Color="Color.Inherit" Edge="Edge.End" />
+        <MudIconButton Icon="@Icons.Filled.ColorLens" Color="Color.Default" OnClick="ChangeThemeAsync" />
     </MudAppBar>
  
     <MudMainContent>
@@ -17,7 +18,5 @@
     </MudMainContent>
 </MudLayout>
 
-<MudThemeProvider />
-@code {
+<MudThemeProvider Theme="@_currentTheme"/>
 
-}

@@ -3,11 +3,21 @@
 
 <PageTitle>@(Id==null ? "Create" : "Edit") | PlannerApp</PageTitle>
 
-<PAPage Title="Create/Edit a plan" BreadcrumbItems="_breadcrumbItems">
-    <MudGrid>
-        <MudItem lg="6" md="8" sm="12">
+<AuthorizeView>
+    <Authorized>
+        <PAPage Title="Create/Edit a plan" BreadcrumbItems="_breadcrumbItems">
+         <MudGrid>
+       -   <MudItem lg="6" md="8" sm="12">
             <Planform Id="@Id" />
-        </MudItem>
-    </MudGrid>
+          </MudItem>
+        </MudGrid>
 
-</PAPage>
+      </PAPage>
+    </Authorized>
+    <NotAuthorized>
+        <MudText Typo="Typo.caption">Welcome extem user , please login to view the page</MudText>
+        <MudDivider DividerType="DividerType.FullWidth" Class="my-2" />
+        <MudLink Href="/auth/login">Login</MudLink>
+    </NotAuthorized>
+
+</AuthorizeView>

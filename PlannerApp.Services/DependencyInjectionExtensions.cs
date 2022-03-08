@@ -13,7 +13,8 @@ namespace PlannerApp.Services
         public static void AddHttpClientService(this IServiceCollection services)
         {
             services.AddScoped<IAuthenticationService, HttpAuthenticationService>()
-                    .AddScoped<IPlannerService, HttpPlannerService>();
+                    .AddScoped<IPlannerService, HttpPlannerService>()
+                    .AddScoped<IToDoItemsService, HttpToDoItemsService>();
         }
         
     }

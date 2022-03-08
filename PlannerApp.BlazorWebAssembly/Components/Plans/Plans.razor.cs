@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using MudBlazor;
 using PlannerApp.BlazorWebAssembly.Components.Dialog;
+using PlannerApp.BlazorWebAssembly.Shared;
 using PlannerApp.Services.Exceptions;
 using PlannerApp.Services.Interfaces;
 using PlannerApp.Shared.Models;
@@ -28,6 +29,9 @@ namespace PlannerApp.BlazorWebAssembly.Components.Plans
         [Inject]
         public IJSRuntime JSRunTime { get; set; }//login system
 
+        [CascadingParameter]  //this show case a casecading parent in the child with this you can call all methods in this casecading class e,g Error componemnt
+        public Error Error { get; set; }
+
         //[Inject]
         //public AuthenticationStateProvider AuthenticationStateProvider { get; set; }  //tellus about login user
 
@@ -40,6 +44,7 @@ namespace PlannerApp.BlazorWebAssembly.Components.Plans
         #region Variable for the PlansList
 
         private  bool _isBusy = false;
+    
 
         private  string _errorMessage = string.Empty;
         private  int _pageSize = 10;
@@ -78,8 +83,8 @@ namespace PlannerApp.BlazorWebAssembly.Components.Plans
             {
 
 
-                await JSRunTime.InvokeVoidAsync("console.log", "Exception", ex.Message);
-                _errorMessage = "Error fetching  employee record ";
+                await JSRunTime.InvokeVoidAsync("console.log", "Error", new { ex.Message, Logdate = DateTime.Now });
+                Error.HandleError(ex);
             }
 
             _isBusy = false;

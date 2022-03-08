@@ -18,7 +18,7 @@ namespace PlannerApp.Services
     {
         private readonly HttpClient _httpClient;
         private readonly IJSRuntime _JSRunTime;
-       private readonly ILocalStorageService _Storage; //is use to store access token  and expiry date after the response from the server
+        private readonly ILocalStorageService _Storage; //is use to store access token  and expiry date after the response from the server
         private AuthenticationStateProvider _AuthenticationStateProvider;  //tellus about login user
         public HttpAuthenticationService(HttpClient httpClient, IJSRuntime JSRunTime, ILocalStorageService storage, AuthenticationStateProvider authenticationStateProvider)
         {

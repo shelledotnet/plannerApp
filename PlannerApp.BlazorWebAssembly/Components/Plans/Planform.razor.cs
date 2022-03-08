@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.JSInterop;
+using PlannerApp.BlazorWebAssembly.Shared;
 using PlannerApp.Services.Exceptions;
 using PlannerApp.Services.Interfaces;
 using PlannerApp.Shared.Models;
@@ -44,6 +45,10 @@ namespace PlannerApp.BlazorWebAssembly.Components.Plans
         public bool _isEditMode => Id != null;
         private bool _isBusy = false;
 
+        [CascadingParameter]  //this show case a casecading parent in the child with this you can call all methods in this casecading class e,g Error componemnt
+        public Error Error { get; set; }
+
+
         //this represent the stream of the file
         private Stream _stream = null; 
 
@@ -54,10 +59,11 @@ namespace PlannerApp.BlazorWebAssembly.Components.Plans
 
         private async Task SubmitFormAsync()
         {
+            
             _isBusy = true;
             try
             {
-
+                //throw new ArgumentException("Invald data");
                 FormFile formFile = null;
                 if (_stream !=null)
                     formFile = new FormFile(_stream, _fileName);
@@ -77,8 +83,8 @@ namespace PlannerApp.BlazorWebAssembly.Components.Plans
             }
             catch (Exception ex)
             {
-                await JSRunTime.InvokeVoidAsync("console.log", "Error", ex.Message);
-                _errorMessage = "Error fetching  employee record ";
+                await JSRunTime.InvokeVoidAsync("console.log", "Error",new { ex.Message,date= DateTime.Now});
+                Error.HandleError(ex);
             }
             _isBusy = false;
         }
@@ -146,7 +152,7 @@ namespace PlannerApp.BlazorWebAssembly.Components.Plans
             catch (Exception ex) //exception that we do not anticaipated
             {
                 await JSRunTime.InvokeVoidAsync("console.log", "Error", ex.Message);
-                _errorMessage = "Error fetching  employee record ";
+                Error.HandleError(ex);
             }
             _isBusy = false;
         }

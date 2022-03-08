@@ -12,6 +12,7 @@ namespace PlannerApp.Shared.Models
     {
         [Required(ErrorMessage ="email id required")]
         [EmailAddress(ErrorMessage ="invalid email id")]
+        [RegularExpression(@"^[A-Za-z0-9_@.]+$", ErrorMessage = "invalid email id")]
         public string Email { get; set; }
 
 

@@ -1,4 +1,5 @@
 <CascadingAuthenticationState>
+    <Error>
     <Router AppAssembly="@typeof(Program).Assembly" PreferExactMatches="@true">
         <Found Context="routeData">
             <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)">
@@ -14,6 +15,7 @@
             </LayoutView>
         </NotFound>
     </Router>
+    </Error>
 </CascadingAuthenticationState>
 @*ensure to add using Microsoft.AspNetCore.Components.Authorization at the global using componet class --Import.Razor
     to enable all the CascadingAuthenticationState parameters e.g  AuthorizeView*@

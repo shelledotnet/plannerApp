@@ -7,10 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="Components\ToDoItems\ToDoItem.razor" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Blazored.FluentValidation" Version="2.0.3" />
     <PackageReference Include="Blazored.LocalStorage" Version="4.1.5" />
     <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="6.0.1" />
@@ -30,18 +26,6 @@
 
   <ItemGroup>
     <ServiceWorker Include="wwwroot\service-worker.js" PublishedContent="wwwroot\service-worker.published.js" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <UpToDateCheckInput Remove="Components\ToDoItems\ToDoItem.razor" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <_ContentIncludedByDefault Remove="Components\ToDoItems\ToDoItem.razor" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="Components\ToDoItems\ToDoItem.razor" />
   </ItemGroup>
 
 </Project>

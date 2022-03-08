@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using MudBlazor;
+using PlannerApp.BlazorWebAssembly.Components.ToDoItems;
+using PlannerApp.BlazorWebAssembly.Shared;
 using PlannerApp.Services.Exceptions;
 using PlannerApp.Services.Interfaces;
 using PlannerApp.Shared.Models;
@@ -27,9 +29,16 @@ namespace PlannerApp.BlazorWebAssembly.Components.Plans
         [Inject]
         public IJSRuntime JSRunTime { get; set; }//login system
 
+        [CascadingParameter]  //this show case a casecading parent in the child with this you can call all methods in this casecading class e,g Error componemnt
+        public Error Error { get; set; }
+
         private PlanDetail _plan;
         private bool _isBusy;
         private string _errorMessage = string.Empty;
+        private List<ToDoItemDetail> _items = new ();
+        private bool _descriptionStyle => _isBusy=false;
+
+
 
         protected override void OnParametersSet()
         {
@@ -52,8 +61,11 @@ namespace PlannerApp.BlazorWebAssembly.Components.Plans
             _isBusy = true;
             try
             {
+                
+                //throw new ArgumentException("Invald data");
                 var result = await PlannerService.GetPlannsByIdAsync(PlanId);
                 _plan = result.Value;
+                _items = _plan.ToDoItems;
                 StateHasChanged();
             }
             catch (ApiException apiException)
@@ -67,11 +79,26 @@ namespace PlannerApp.BlazorWebAssembly.Components.Plans
             {
 
 
-                await JSRunTime.InvokeVoidAsync("console.log", "Exception", ex.Message);
-                _errorMessage = "Error fetching  employee record ";
+                await JSRunTime.InvokeVoidAsync("console.log", "Error", new { ex.Message, date = DateTime.Now });
+                Error.HandleError(ex);
             }
             _isBusy = false;
         }
        
+        private void OnToDoItemAddedCallBack(ToDoItemDetail toDoItemDetail)
+        {
+            _items.Add(toDoItemDetail);
+        }
+        private void OnItemDeletedCallBack(ToDoItemDetail toDoItemDetail)
+        {
+            _items.Remove(toDoItemDetail);
+        }
+        private void OnItemEditCallBack(ToDoItemDetail toDoItemDetail)
+        {
+            var editedItem=_items.SingleOrDefault(i=>i.Id== toDoItemDetail.Id);
+            editedItem.Description= toDoItemDetail.Description;
+            editedItem.IsDone= toDoItemDetail.IsDone;
+           
+        }
     }
 }
